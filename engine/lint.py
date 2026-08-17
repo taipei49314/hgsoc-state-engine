@@ -8,6 +8,8 @@ from typing import Any
 
 import yaml
 
+from engine.anatomy import load_anatomy, normalize_curie
+
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY_PATH = ROOT / "spec" / "state_registry.yaml"
 
@@ -161,7 +163,48 @@ def lint_state(instance: dict[str, Any], registry: dict[str, Any] | None = None)
                 "UNKNOWN",
             )
 
+    if spec.get("state_type") == "ANATOMICAL_INVOLVEMENT":
+        return _lint_anatomy(instance, spec, state_id, knowledge, coverage)
+
     return LintResult("PASS", "named under permit", state_id, "NAMED", knowledge, coverage)
+
+
+def _lint_anatomy(
+    instance: dict[str, Any],
+    spec: dict[str, Any],
+    state_id: str,
+    knowledge: str,
+    coverage: str | None,
+) -> LintResult:
+    anatomy = load_anatomy()
+    allowed = (anatomy["by_state"].get(state_id) or {}).get("ontology_ids") or []
+    raw_id = instance.get("ontology_id")
+    if not isinstance(raw_id, str) or not raw_id.strip():
+        return LintResult(
+            "BLOCKED",
+            "NAMED anatomy requires UBERON id",
+            state_id,
+            "UNNAMED",
+            "UNKNOWN",
+        )
+    oid = normalize_curie(raw_id)
+    if allowed and oid not in allowed:
+        return LintResult(
+            "BLOCKED",
+            "ontology_id does not match this anatomical state",
+            state_id,
+            "UNNAMED",
+            "UNKNOWN",
+        )
+    return LintResult(
+        "PASS",
+        "anatomical state named under permit",
+        state_id,
+        "NAMED",
+        knowledge,
+        coverage,
+        ["ANATOMICAL_STATE_NAMED", oid],
+    )
 
 
 def _lint_host_effect(

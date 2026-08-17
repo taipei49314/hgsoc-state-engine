@@ -1,0 +1,47 @@
+claim_id: C-0005
+source: human_curated
+curator_status: ADMITTED
+subject:
+  state_id: STIC_LESION
+relation:
+  type: is
+object:
+  state_id: STIC_PRESENT
+  ontology_id: UBERON:8410010
+source_layer: L4
+target_layer: L5A
+context:
+  disease: HGSOC
+  treatment: untreated
+  anatomy: fimbria
+  specimen: published_cohort_not_this_slice
+evidence:
+  - PMID: "17255760"
+    evidence_type: experimental_evidence
+    evidence_fit: FIT_3
+    model_system: human_tumor_pathology
+    assay: SEE-FIM_histopathology
+    endpoint: STIC_at_fimbria
+    raw_effect: null
+    confidence_interval: null
+    limitations: published_cohort_not_this_slice; treatment_not_uniformly_documented
+evidence_kinds:
+  - pathology
+assumptions:
+  - type: COHORT_TO_SLICE
+    statement: cohort pathology permits naming STIC at fimbria when this specimen has matching evidence; it does not name sample origin
+contradictions: []
+falsify:
+  observable: SEE-FIM histopathology does not show STIC at the fimbria
+  assay: SEE-FIM_histopathology
+  expected_result: no_STIC
+  threshold: specified
+transfer_gaps:
+  - from: published_cohort
+    to: this_untreated_HGSOC_slice
+    resolved: false
+knowledge_status: SUPPORTED
+naming_status: NAMED
+allowed_as_parent: true
+host_effect_eligible: false
+names_sample_origin: false

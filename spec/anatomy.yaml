@@ -1,0 +1,59 @@
+# Phase 5 anatomy sites. Discrete involvement, not organ function.
+# IDs locked against UBERON (OLS). Do not invent local whole-body names.
+
+version: 1
+kind: anatomy_ontology
+system: UBERON
+required_when_named: true
+missing_ontology_id: BLOCKED
+wrong_ontology_id: BLOCKED
+
+sites:
+  fallopian_tube:
+    ontology_id: UBERON:0003889
+    label: fallopian tube
+  fimbria:
+    ontology_id: UBERON:8410010
+    label: fimbria of fallopian tube
+    part_of: UBERON:0003889
+  ovary:
+    ontology_id: UBERON:0000992
+    label: ovary
+  peritoneum:
+    ontology_id: UBERON:0002358
+    label: peritoneum
+  omentum:
+    ontology_id: UBERON:0005448
+    label: greater omentum
+  ascitic_compartment:
+    ontology_id: UBERON:0001179
+    label: peritoneal cavity
+    note: ascitic tumor cells occupy the peritoneal cavity; this is involvement, not organ function
+
+state_sites:
+  STIC_PRESENT: [fimbria, fallopian_tube]
+  FALLOPIAN_TUBE_FIMBRIA_INVOLVED: [fimbria]
+  OVARIAN_SURFACE_COLONIZED: [ovary]
+  OVARIAN_TUMOR_PRESENT: [ovary]
+  PERITONEAL_IMPLANT_PRESENT: [peritoneum]
+  OMENTAL_METASTASIS_PRESENT: [omentum]
+  ASCITIC_TUMOR_CELLS_PRESENT: [ascitic_compartment]
+
+named_verdict_note: ANATOMICAL_STATE_NAMED
+
+never_auto_name:
+  - this_sample_originated_in_fallopian_tube
+  - organ_failure
+  - ovarian_failure
+
+origin_trajectories:
+  population_supported:
+    - [STIC_PRESENT, OVARIAN_TUMOR_PRESENT]
+  also_admissible:
+    - [STIC_PRESENT, PERITONEAL_IMPLANT_PRESENT]
+  does_not_name_sample_origin: true
+
+not:
+  - organ_function
+  - organ_failure
+  - organ_function_ODE

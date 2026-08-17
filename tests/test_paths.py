@@ -33,7 +33,7 @@ def test_brca1_has_primary_and_no_invented_second():
     assert "L5B_organ_function" in report.unmodeled_layers
     assert report.unknown["organ_function"] == "UNMODELED"
     assert report.weakest_link["weakest_evidence_fit"] == "FIT_1"
-    assert report.receipt["engine_version"].startswith("0.4")
+    assert report.receipt["engine_version"].startswith("0.5")
     assert report.primary_path["edges"][0]["evidence"][0]["PMID"] == "25400221"
     assert report.primary_path["edges"][0]["falsify"]["observable"]
 

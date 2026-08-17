@@ -6,4 +6,3 @@ context:
   species: human
 evidence_kinds:
   - pathology
-ontology_id: UBERON:8410010

@@ -1,0 +1,9 @@
+paper_id: P-20861711
+PMID: "20861711"
+title: Are all pelvic (nonuterine) serous carcinomas of tubal origin?
+role: human_pathology_anatomy
+disease_relevance: HGSOC
+notes:
+  - Human cohort. STIC is common but not universal.
+  - Admits an alternative peritoneal / non-tubal-origin trajectory.
+  - Does not auto-name this_sample_originated_in_fallopian_tube.

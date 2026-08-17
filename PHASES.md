@@ -7,7 +7,7 @@
 | 2 | Evidence ledger (human curate; LLM may extract, not upgrade) | landed (`python -m pytest`) |
 | 3 | Gate engine (full claim packets, not only naming) | landed (`python -m pytest`) |
 | 4 | Path engine (primary + second admissible path) | landed (`python -m pytest`) |
-| 5 | Anatomy layer with ontology IDs; still no organ-function ODE | not started |
+| 5 | Anatomy layer with ontology IDs; still no organ-function ODE | landed (`python -m pytest`) |
 | 6 | Product loop UI | not started |
 | 7 | Host observation pilot (`ascites`) as product surface | not started |
 | 8 | First host-effect **challenge** fixture (UNKNOWN is a valid finish) | not started |

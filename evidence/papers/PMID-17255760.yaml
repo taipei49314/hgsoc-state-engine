@@ -1,0 +1,9 @@
+paper_id: P-17255760
+PMID: "17255760"
+title: Intraepithelial carcinoma of the fimbria and pelvic serous carcinoma
+role: human_pathology_anatomy
+disease_relevance: HGSOC
+notes:
+  - Human SEE-FIM pathology. Supports naming STIC at fimbria.
+  - Does not auto-name this_sample_originated_in_fallopian_tube.
+  - Does not name organ function.

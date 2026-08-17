@@ -231,42 +231,61 @@ states:
     default_naming_status: UNNAMED
     default_knowledge_status: UNKNOWN
 
-  # --- Tissue / anatomy ---
+  # --- Tissue / tumor (L4). Not anatomy; site naming is L5A. ---
+  - id: STIC_LESION
+    layer: L4
+    state_type: TISSUE_OR_TUMOR
+    required_to_name_any_evidence: [pathology, cytology, imaging]
+    named_without_direct_evidence: BLOCKED
+  - id: INVASIVE_HGSOC_PRESENT
+    layer: L4
+    state_type: TISSUE_OR_TUMOR
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation]
+    named_without_direct_evidence: BLOCKED
+
+  # --- Anatomical involvement (L5A). Ontology IDs in spec/anatomy.yaml. ---
   - id: STIC_PRESENT
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing, phylogenetic_reconstruction]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: FALLOPIAN_TUBE_FIMBRIA_INVOLVED
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: OVARIAN_SURFACE_COLONIZED
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: OVARIAN_TUMOR_PRESENT
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: PERITONEAL_IMPLANT_PRESENT
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: OMENTAL_METASTASIS_PRESENT
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
   - id: ASCITIC_TUMOR_CELLS_PRESENT
     layer: L5A
     state_type: ANATOMICAL_INVOLVEMENT
     required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation]
     named_without_direct_evidence: BLOCKED
+    requires_ontology_id: true
 
   # --- Host ---
   - id: HOST_OBSERVATION_ASCITES
@@ -287,6 +306,8 @@ states:
 never_register:
   - ovarian_cancer
   - organ_failure
+  - ovarian_failure
+  - this_sample_originated_in_fallopian_tube
   - systemic_inflammation
   - platinum_sensitive
   - overall_survival

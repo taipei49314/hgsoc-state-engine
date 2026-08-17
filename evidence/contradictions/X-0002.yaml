@@ -1,0 +1,10 @@
+contradiction_id: X-0002
+PMID: "20861711"
+statement: STIC or fimbrial involvement does not entail that this sample originated in the fallopian tube.
+blocks_inference:
+  from: STIC_PRESENT
+  to: this_sample_originated_in_fallopian_tube
+must_not:
+  - drop_from_ledger
+  - auto_name_sample_origin
+related_claim: C-0007

@@ -3,7 +3,16 @@
   "note": "Lock ontology families. Do not invent local whole-body phenotype names.",
   "anatomy": {
     "system": "UBERON",
-    "required_when": "L5A anatomical involvement is NAMED"
+    "required_when": "L5A anatomical involvement is NAMED",
+    "ids_verified_at_ingestion": true,
+    "locked_ids": {
+      "UBERON:0003889": "fallopian tube",
+      "UBERON:8410010": "fimbria of fallopian tube",
+      "UBERON:0000992": "ovary",
+      "UBERON:0002358": "peritoneum",
+      "UBERON:0005448": "greater omentum",
+      "UBERON:0001179": "peritoneal cavity"
+    }
   },
   "host_phenotype": {
     "system": "HPO",

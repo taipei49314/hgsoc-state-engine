@@ -1,9 +1,6 @@
-state_id: STIC_PRESENT
+state_id: this_sample_originated_in_fallopian_tube
 naming_status: NAMED
 context:
   disease: HGSOC
   treatment: untreated
   species: human
-evidence_kinds:
-  - pathology
-ontology_id: UBERON:8410010

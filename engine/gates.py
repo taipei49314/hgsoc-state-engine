@@ -190,7 +190,12 @@ def gate_claim(
         steps.append(GateStep("G4", verdict, reason))
         return _fail(claim_id, steps, verdict, reason)
 
+    if claim.get("names_sample_origin") is True:
+        steps.append(GateStep("G4", "BLOCKED", "cannot auto-name this_sample_originated_in_fallopian_tube"))
+        return _fail(claim_id, steps, "BLOCKED", steps[-1].reason)
+
     if claim.get("naming_status") == "NAMED" and obj:
+        obj_node = claim.get("object") if isinstance(claim.get("object"), dict) else {}
         named = lint_state(
             {
                 "state_id": obj,
@@ -198,6 +203,7 @@ def gate_claim(
                 "context": ctx,
                 "inferred_from": claim.get("inferred_from"),
                 "evidence_kinds": claim.get("evidence_kinds") or [],
+                "ontology_id": obj_node.get("ontology_id") or claim.get("ontology_id"),
                 **{k: claim[k] for k in ("assay_name", "assay_version", "cutoff", "specimen") if k in claim},
             },
             registry,

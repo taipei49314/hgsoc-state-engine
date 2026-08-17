@@ -24,7 +24,8 @@
       "type": "array",
       "items": { "type": "string" }
     },
-    "h3_packet_complete": { "type": "boolean" }
+    "h3_packet_complete": { "type": "boolean" },
+    "ontology_id": { "type": "string" }
   },
   "additionalProperties": true
 }

@@ -60,6 +60,17 @@ python -m engine.paths fixtures/queries/brca1.yaml
 python -m engine.paths fixtures/queries/brca1.yaml --claims evidence/claims fixtures/paths
 ```
 
+## Phase 5 — anatomy layer
+
+Anatomical involvement may be named only with a locked UBERON ID.
+The engine can walk to L5A. It does not emit organ failure or a
+sample-origin story.
+
+```bash
+python -m engine.lint fixtures/pass/stic_pathology.yaml
+python -m engine.paths fixtures/queries/anatomy.yaml
+```
+
 ## Status
 
 `host_effect` default: `UNNAMED` + `UNKNOWN` + `GATE_ONLY`.

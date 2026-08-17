@@ -6,4 +6,5 @@ context:
   species: human
 evidence_kinds:
   - pathology
+ontology_id: UBERON:0000992
 upgrade_to: organ_failure

@@ -16,3 +16,4 @@ read the registry and enforce these verdicts.
 | [unmodeled.yaml](unmodeled.yaml) | UNKNOWN vs UNMODELED vs OUT_OF_SCOPE |
 | [acceptance.yaml](acceptance.yaml) | T01–T14 expected verdicts |
 | [state_registry.yaml](state_registry.yaml) | Phase 1 controlled vocabulary |
+| [anatomy.yaml](anatomy.yaml) | Phase 5 UBERON sites; anatomy is not organ function |

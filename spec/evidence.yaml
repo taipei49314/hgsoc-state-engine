@@ -75,3 +75,5 @@ seed_pmids_not_auto_admitted:
   - "34203855"  # RAD51-based functional HRD
   - "25400221"  # BRCA1 and stalled-fork / fork-collapse suppression
   - "37729060"  # fallopian-tube epithelial replication stress / checkpoint
+  - "17255760"  # STIC / fimbria pathology (Kindelberger)
+  - "20861711"  # STIC is common, not universal tubal origin (Przybycin)

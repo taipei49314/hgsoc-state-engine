@@ -28,7 +28,7 @@ from engine.lint import (
 )
 
 ROOT = Path(__file__).resolve().parents[1]
-ENGINE_VERSION = "0.4.0-phase4"
+ENGINE_VERSION = "0.5.0-phase5"
 DEFAULT_CLAIMS = ROOT / "evidence" / "claims"
 ONTOLOGY_LOCK = ROOT / "evidence" / "ontology-lock.json"
 MAX_DEPTH = 8
@@ -144,12 +144,14 @@ class WalkedPath:
     def as_dict(self) -> dict[str, Any]:
         edges = []
         for claim in self.claims:
+            obj_node = claim.get("object") if isinstance(claim.get("object"), dict) else {}
             edges.append(
                 {
                     "claim_id": claim.get("claim_id"),
                     "subject": _id(claim.get("subject")),
                     "relation": (claim.get("relation") or {}).get("type"),
                     "object": _id(claim.get("object")),
+                    "ontology_id": obj_node.get("ontology_id"),
                     "source_layer": claim.get("source_layer"),
                     "target_layer": claim.get("target_layer"),
                     "evidence": _edge_evidence(claim),

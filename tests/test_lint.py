@@ -20,6 +20,7 @@ def test_registry_loads_first_batch():
         "A2_INVASIVE_MARGIN",
         "A3_IMMUNE_EXCLUDED",
         "A4_NOT_EVALUATED",
+        "STIC_LESION",
         "STIC_PRESENT",
         "HOST_EFFECT",
         "HOST_OBSERVATION_ASCITES",
@@ -96,6 +97,7 @@ def test_stic_with_pathology_named():
     result = lint_path(FIX / "pass" / "stic_pathology.yaml")
     assert result.verdict == "PASS"
     assert result.naming_status == "NAMED"
+    assert "ANATOMICAL_STATE_NAMED" in result.notes
 
 
 def test_anatomy_is_not_organ_failure():
