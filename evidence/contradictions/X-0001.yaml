@@ -1,0 +1,10 @@
+contradiction_id: X-0001
+PMID: "30318511"
+statement: Genomic HRD score can remain high after functional HR recovery.
+blocks_inference:
+  from: HRD_HIGH
+  to: FUNCTIONAL_HR_DEFICIENT
+must_not:
+  - drop_from_ledger
+  - average_into_support_mass
+related_claim: C-0002

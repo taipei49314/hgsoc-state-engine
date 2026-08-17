@@ -1,0 +1,8 @@
+paper_id: P-25400221
+PMID: "25400221"
+title: BRCA1 and stalled-fork / fork-collapse suppression
+role: model_mechanism
+disease_relevance: HGSOC
+notes:
+  - FIT_1/model mechanism. Transfer gap to human untreated HGSOC remains unresolved.
+  - Does not name FORK_COLLAPSE_PRESENT on an untreated human slice.

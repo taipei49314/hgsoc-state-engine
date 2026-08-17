@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "note": "Lock ontology families. Do not invent local whole-body phenotype names.",
+  "anatomy": {
+    "system": "UBERON",
+    "required_when": "L5A anatomical involvement is NAMED"
+  },
+  "host_phenotype": {
+    "system": "HPO",
+    "required_when": "HOST_OBSERVATION or HOST_EFFECT is typed"
+  },
+  "evidence_type": {
+    "system": "ECO",
+    "required_when": "claim.evidence[].evidence_type"
+  },
+  "ids_verified_at_ingestion": false
+}

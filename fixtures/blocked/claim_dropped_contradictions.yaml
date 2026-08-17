@@ -1,0 +1,37 @@
+claim_id: BAD-DROP
+source: human_curated
+curator_status: ADMITTED
+subject:
+  state_id: HRD_HIGH
+relation:
+  type: does_not_entail
+object:
+  state_id: FUNCTIONAL_HR_DEFICIENT
+source_layer: L2
+target_layer: L2
+context:
+  disease: HGSOC
+  treatment: untreated
+  anatomy: unspecified
+  specimen: x
+evidence:
+  - PMID: "30318511"
+    evidence_type: sequencing_evidence
+    evidence_fit: FIT_3
+    model_system: human
+    assay: x
+    endpoint: x
+    raw_effect: null
+    confidence_interval: null
+    limitations: x
+assumptions: []
+falsify:
+  observable: x
+  assay: x
+  expected_result: x
+  threshold: x
+transfer_gaps: []
+knowledge_status: SUPPORTED
+naming_status: UNNAMED
+allowed_as_parent: false
+host_effect_eligible: false

@@ -1,0 +1,8 @@
+paper_id: P-34203855
+PMID: "34203855"
+title: RAD51-based functional HRD testing
+role: functional_assay
+disease_relevance: HGSOC
+notes:
+  - Direct functional HR is a separate state from genomic HRD-high.
+  - Naming FUNCTIONAL_HR_DEFICIENT still requires the assay packet on the specimen.

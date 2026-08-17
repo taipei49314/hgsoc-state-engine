@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/taipei49314/hgsoc-state-engine/schemas/claim.schema.json",
+  "title": "HGSOC evidence claim",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "subject",
+    "relation",
+    "object",
+    "source_layer",
+    "target_layer",
+    "context",
+    "evidence",
+    "assumptions",
+    "contradictions",
+    "falsify",
+    "transfer_gaps",
+    "knowledge_status",
+    "naming_status",
+    "allowed_as_parent",
+    "host_effect_eligible",
+    "curator_status",
+    "source"
+  ],
+  "properties": {
+    "claim_id": { "type": "string" },
+    "subject": {
+      "type": "object",
+      "required": ["state_id"],
+      "properties": { "state_id": { "type": "string" } }
+    },
+    "relation": {
+      "type": "object",
+      "required": ["type"],
+      "properties": { "type": { "type": "string" } }
+    },
+    "object": {
+      "type": "object",
+      "required": ["state_id"],
+      "properties": { "state_id": { "type": "string" } }
+    },
+    "source": { "enum": ["human_curated", "llm_extract"] },
+    "curator_status": { "enum": ["ADMITTED", "PENDING", "REJECTED"] },
+    "knowledge_status": {
+      "enum": [
+        "OBSERVED",
+        "ASSOCIATED",
+        "SUPPORTED",
+        "SUPPORTED_IN_MODEL",
+        "INFERRED",
+        "CONFLICTED",
+        "UNKNOWN"
+      ]
+    },
+    "naming_status": { "enum": ["NAMED", "UNNAMED"] },
+    "host_effect_eligible": { "type": "boolean" }
+  },
+  "additionalProperties": true
+}

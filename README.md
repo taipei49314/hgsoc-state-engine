@@ -32,6 +32,12 @@ python -m pytest
 python -m engine.lint fixtures/blocked/fork_collapse_from_brca1.yaml
 ```
 
+## Phase 2 — evidence ledger
+
+First curated pack: `evidence/papers`, `evidence/claims`, `evidence/contradictions`.
+LLM extracts cannot become `SUPPORTED`, cannot set `host_effect_eligible`, and
+cannot omit `contradictions`.
+
 ## Status
 
 `host_effect` default: `UNNAMED` + `UNKNOWN` + `GATE_ONLY`.

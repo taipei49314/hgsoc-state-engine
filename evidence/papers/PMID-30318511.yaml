@@ -1,0 +1,9 @@
+paper_id: P-30318511
+PMID: "30318511"
+title: Genomic HRD score can decouple from functional HR recovery
+role: contradiction_and_limit
+disease_relevance: HGSOC
+notes:
+  - HRD_HIGH is an assay classification, not currently-functional HR deficiency.
+  - Must not be dropped from the ledger.
+  - Must not be averaged into a support mass.

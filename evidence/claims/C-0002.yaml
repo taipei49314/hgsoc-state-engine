@@ -1,0 +1,40 @@
+claim_id: C-0002
+source: human_curated
+curator_status: ADMITTED
+subject:
+  state_id: HRD_HIGH
+relation:
+  type: does_not_entail
+object:
+  state_id: FUNCTIONAL_HR_DEFICIENT
+source_layer: L2
+target_layer: L2
+context:
+  disease: HGSOC
+  treatment: untreated
+  anatomy: unspecified
+  specimen: published_cohort_not_this_slice
+evidence:
+  - PMID: "30318511"
+    evidence_type: sequencing_evidence
+    evidence_fit: FIT_3
+    model_system: human_tumor_genomic
+    assay: genomic_HRD_score
+    endpoint: score_vs_functional_recovery
+    raw_effect: null
+    confidence_interval: null
+    limitations: genomic_scar_is_historical
+assumptions:
+  - type: ASSAY_IS_NOT_MECHANISM
+    statement: HRD-high classification is not currently-functional HR deficiency
+contradictions: []
+falsify:
+  observable: genomic HRD-high always equals functional HR deficiency on the same specimen
+  assay: paired_genomic_and_RAD51
+  expected_result: perfect_concordance
+  threshold: specified
+transfer_gaps: []
+knowledge_status: SUPPORTED
+naming_status: UNNAMED
+allowed_as_parent: false
+host_effect_eligible: false

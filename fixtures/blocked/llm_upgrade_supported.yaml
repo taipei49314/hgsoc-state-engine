@@ -1,0 +1,41 @@
+claim_id: BAD-LLM
+source: llm_extract
+curator_status: PENDING
+subject:
+  state_id: BRCA1_BIALLELIC_LOSS_OBSERVED
+relation:
+  type: increases_likelihood_of
+object:
+  state_id: FORK_COLLAPSE_PRESENT
+source_layer: L1
+target_layer: L2
+context:
+  disease: HGSOC
+  treatment: untreated
+  anatomy: unspecified
+  specimen: x
+evidence:
+  - PMID: "25400221"
+    evidence_type: experimental_evidence
+    evidence_fit: FIT_1
+    model_system: cell_line
+    assay: x
+    endpoint: x
+    raw_effect: null
+    confidence_interval: null
+    limitations: x
+assumptions: []
+contradictions: []
+falsify:
+  observable: x
+  assay: x
+  expected_result: x
+  threshold: x
+transfer_gaps:
+  - from: cell_line
+    to: human_untreated_HGSOC
+    resolved: false
+knowledge_status: SUPPORTED
+naming_status: UNNAMED
+allowed_as_parent: false
+host_effect_eligible: false
