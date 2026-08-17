@@ -1,0 +1,11 @@
+state_id: HOST_OBSERVATION_ASCITES
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+measurement: clinical_detection
+host_effect:
+  naming_status: UNNAMED
+  knowledge_status: UNKNOWN
+  coverage_status: GATE_ONLY

@@ -1,0 +1,8 @@
+state_id: FORK_COLLAPSE_PRESENT
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+evidence_kinds:
+  - HRD_HIGH

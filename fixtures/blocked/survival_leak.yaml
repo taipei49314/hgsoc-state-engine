@@ -1,0 +1,11 @@
+state_id: HRD_HIGH
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+assay_name: myChoice HRD
+assay_version: "1.0"
+cutoff: "42"
+specimen: untreated_HGSOC_primary
+upgrade_to: overall_survival

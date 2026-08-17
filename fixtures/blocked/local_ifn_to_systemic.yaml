@@ -1,0 +1,10 @@
+state_id: A3_INFLAMED_LOCAL
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+assay: IFN_signature
+specimen: primary
+spatial_region: tumor_core
+upgrade_to: systemic_inflammation

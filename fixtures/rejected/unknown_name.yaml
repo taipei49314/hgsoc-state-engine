@@ -1,0 +1,5 @@
+state_id: ORGAN_FAILURE
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated

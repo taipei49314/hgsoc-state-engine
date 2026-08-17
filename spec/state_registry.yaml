@@ -1,0 +1,292 @@
+# Phase 1 controlled vocabulary. Unknown state_id is rejected by the linter.
+# Naming a registered state still requires that state's permit.
+
+version: 1
+kind: state_registry
+
+defaults:
+  naming_status: UNNAMED
+  knowledge_status: UNKNOWN
+
+states:
+  # --- Context ---
+  - id: CTX_HGSOC
+    layer: L0
+    state_type: CONTEXT
+    label: high-grade serous ovarian carcinoma
+  - id: CTX_UNTREATED_BASELINE
+    layer: L0
+    state_type: CONTEXT
+    label: untreated baseline specimen
+  - id: CTX_SPECIES_HUMAN
+    layer: L0
+    state_type: CONTEXT
+    label: human
+
+  # --- Variant / protein ---
+  - id: BRCA1_PATHOGENIC_VARIANT_OBSERVED
+    layer: L1
+    state_type: VARIANT_OR_PROTEIN
+    required_to_name: [assay, specimen, variant_classification, allelic_state, source]
+    missing_required: BLOCKED
+  - id: BRCA1_BIALLELIC_LOSS_OBSERVED
+    layer: L1
+    state_type: VARIANT_OR_PROTEIN
+    required_to_name: [assay, specimen, allelic_state, source]
+    missing_required: BLOCKED
+  - id: TP53_PATHOGENIC_VARIANT_OBSERVED
+    layer: L1
+    state_type: VARIANT_OR_PROTEIN
+    required_to_name: [assay, specimen, variant_classification, allelic_state, source]
+    missing_required: BLOCKED
+  - id: BRCA1_PROTEIN_LOW
+    layer: L1
+    state_type: VARIANT_OR_PROTEIN
+    required_to_name: [assay, specimen, threshold, source]
+    missing_required: BLOCKED
+  - id: RAD51_FOCI_COUNT_OBSERVED
+    layer: L1
+    state_type: VARIANT_OR_PROTEIN
+    required_to_name: [assay, specimen, threshold, source]
+    missing_required: BLOCKED
+
+  # --- Assay classification (not a mechanism) ---
+  - id: HRD_HIGH
+    layer: L2
+    state_type: ASSAY_CLASSIFICATION
+    required_to_name: [assay_name, assay_version, cutoff, specimen]
+    missing_required: BLOCKED
+    must_not_upgrade_to:
+      - FUNCTIONAL_HR_DEFICIENT
+      - FORK_COLLAPSE_PRESENT
+
+  # --- Molecular process ---
+  - id: FUNCTIONAL_HR_DEFICIENT
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name: [functional_HR_assay, threshold, damage_context, tumor_cell_denominator]
+    missing_required: UNKNOWN
+    forbidden_inference_from: [HRD_HIGH_alone, BRCA1_variant_alone, author_statement_alone]
+    forbidden_inference_verdict: UNKNOWN
+  - id: REPLICATION_STRESS_HIGH
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name: [assay, threshold, specimen]
+    missing_required: UNKNOWN
+  - id: STALLED_FORK_REPAIR_DEFECTIVE
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name_any_evidence:
+      - direct_fork_assay
+      - replication_coupled_break_evidence
+    named_without_direct_evidence: BLOCKED
+    forbidden_inference_from: [BRCA1_variant_alone, HRD_HIGH_alone, author_statement_alone]
+  - id: FORK_PROTECTION_DEFECTIVE
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name_any_evidence:
+      - direct_fork_assay
+      - replication_coupled_break_evidence
+    named_without_direct_evidence: BLOCKED
+    forbidden_inference_from: [BRCA1_variant_alone, HRD_HIGH_alone, author_statement_alone]
+  - id: FORK_COLLAPSE_PRESENT
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name_any_evidence:
+      - direct_fork_assay
+      - replication_coupled_break_evidence
+      - validated_fork_collapse_marker_packet
+    named_without_direct_evidence: BLOCKED
+    forbidden_inference_from: [BRCA1_variant_alone, HRD_HIGH_alone, author_statement_alone]
+  - id: G2M_CHECKPOINT_DEFECTIVE
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name: [assay, threshold, specimen]
+    missing_required: UNKNOWN
+  - id: CHROMOSOMAL_INSTABILITY_HIGH
+    layer: L2
+    state_type: BIOLOGICAL_PROCESS_STATE
+    required_to_name: [assay, threshold, specimen]
+    missing_required: UNKNOWN
+
+  # --- Axis A1 cell state ---
+  - id: A1_PROLIFERATIVE
+    layer: L3
+    state_type: AXIS_VALUE
+    axis: A1
+    required_to_name: [marker_set, assay, threshold, cell_population, spatial_region]
+    missing_required: BLOCKED
+  - id: A1_QUIESCENT
+    layer: L3
+    state_type: AXIS_VALUE
+    axis: A1
+    required_to_name: [marker_set, assay, threshold, cell_population, spatial_region]
+    missing_required: BLOCKED
+  - id: A1_STRESSED
+    layer: L3
+    state_type: AXIS_VALUE
+    axis: A1
+    required_to_name: [marker_set, assay, threshold, cell_population, spatial_region]
+    missing_required: BLOCKED
+  - id: A1_MIXED
+    layer: L3
+    state_type: AXIS_VALUE
+    axis: A1
+    required_to_name: [marker_set, assay, threshold, cell_population, spatial_region]
+    missing_required: BLOCKED
+  - id: A1_UNKNOWN
+    layer: L3
+    state_type: AXIS_VALUE
+    axis: A1
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+
+  # --- Axis A2 spatial ecology ---
+  - id: A2_TUMOR_CORE
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A2
+    required_to_name: [operational_region_definition, segmentation_method]
+    missing_required: BLOCKED
+  - id: A2_INVASIVE_MARGIN
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A2
+    required_to_name: [operational_region_definition, segmentation_method]
+    missing_required: BLOCKED
+  - id: A2_STROMAL_INTERFACE
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A2
+    required_to_name: [operational_region_definition, segmentation_method]
+    missing_required: BLOCKED
+  - id: A2_MIXED_REGION
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A2
+    required_to_name: [operational_region_definition, segmentation_method]
+    missing_required: BLOCKED
+  - id: A2_UNKNOWN_REGION
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A2
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+
+  # --- Axis A3 immune (local only) ---
+  - id: A3_IMMUNE_EXCLUDED
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A3
+    required_to_name: [assay, specimen, spatial_region]
+    missing_required: BLOCKED
+  - id: A3_INFLAMED_LOCAL
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A3
+    required_to_name: [assay, specimen, spatial_region]
+    missing_required: BLOCKED
+  - id: A3_IMMUNE_ENGAGED
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A3
+    required_to_name: [assay, specimen, spatial_region]
+    missing_required: BLOCKED
+  - id: A3_MIXED
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A3
+    required_to_name: [assay, specimen, spatial_region]
+    missing_required: BLOCKED
+  - id: A3_UNKNOWN
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A3
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+
+  # --- Axis A4 preparedness ---
+  - id: A4_PERMISSIVE
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A4
+    required_to_name: [perturbation, assay, endpoint, threshold]
+    missing_required: BLOCKED
+  - id: A4_REFRACTORY
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A4
+    required_to_name: [perturbation, assay, endpoint, threshold]
+    missing_required: BLOCKED
+  - id: A4_NOT_EVALUATED
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A4
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+  - id: A4_UNKNOWN
+    layer: L4
+    state_type: AXIS_VALUE
+    axis: A4
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+
+  # --- Tissue / anatomy ---
+  - id: STIC_PRESENT
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing, phylogenetic_reconstruction]
+    named_without_direct_evidence: BLOCKED
+  - id: FALLOPIAN_TUBE_FIMBRIA_INVOLVED
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
+    named_without_direct_evidence: BLOCKED
+  - id: OVARIAN_SURFACE_COLONIZED
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
+    named_without_direct_evidence: BLOCKED
+  - id: OVARIAN_TUMOR_PRESENT
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
+    named_without_direct_evidence: BLOCKED
+  - id: PERITONEAL_IMPLANT_PRESENT
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
+    named_without_direct_evidence: BLOCKED
+  - id: OMENTAL_METASTASIS_PRESENT
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation, matched_sequencing]
+    named_without_direct_evidence: BLOCKED
+  - id: ASCITIC_TUMOR_CELLS_PRESENT
+    layer: L5A
+    state_type: ANATOMICAL_INVOLVEMENT
+    required_to_name_any_evidence: [pathology, cytology, imaging, surgical_observation]
+    named_without_direct_evidence: BLOCKED
+
+  # --- Host ---
+  - id: HOST_OBSERVATION_ASCITES
+    layer: L6
+    state_type: HOST_OBSERVATION
+    required_to_name: [measurement]
+    missing_required: UNKNOWN
+    does_not_name: HOST_EFFECT
+  - id: HOST_EFFECT
+    layer: L6
+    state_type: HOST_EFFECT
+    default_naming_status: UNNAMED
+    default_knowledge_status: UNKNOWN
+    default_coverage_status: GATE_ONLY
+    named_requires: H3
+    named_without_H3: BLOCKED
+
+never_register:
+  - ovarian_cancer
+  - organ_failure
+  - systemic_inflammation
+  - platinum_sensitive
+  - overall_survival

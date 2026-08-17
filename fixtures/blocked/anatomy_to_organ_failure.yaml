@@ -1,0 +1,9 @@
+state_id: OVARIAN_TUMOR_PRESENT
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+evidence_kinds:
+  - pathology
+upgrade_to: organ_failure

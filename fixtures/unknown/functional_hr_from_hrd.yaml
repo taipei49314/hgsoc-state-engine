@@ -1,0 +1,7 @@
+state_id: FUNCTIONAL_HR_DEFICIENT
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+inferred_from: HRD_HIGH_alone

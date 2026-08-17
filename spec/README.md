@@ -14,3 +14,4 @@ Machine-readable contracts. No engine reads these yet.
 | [ranking.yaml](ranking.yaml) | No fake support masses |
 | [unmodeled.yaml](unmodeled.yaml) | UNKNOWN vs UNMODELED vs OUT_OF_SCOPE |
 | [acceptance.yaml](acceptance.yaml) | T01–T14 expected verdicts |
+| [state_registry.yaml](state_registry.yaml) | Phase 1 controlled vocabulary |

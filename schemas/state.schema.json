@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/taipei49314/hgsoc-state-engine/schemas/state.schema.json",
+  "title": "HGSOC named-state instance",
+  "type": "object",
+  "required": ["state_id"],
+  "properties": {
+    "state_id": { "type": "string", "minLength": 1 },
+    "naming_status": { "enum": ["NAMED", "UNNAMED"] },
+    "knowledge_status": {
+      "enum": ["OBSERVED", "ASSOCIATED", "SUPPORTED", "INFERRED", "CONFLICTED", "UNKNOWN"]
+    },
+    "coverage_status": { "enum": ["MODELED", "GATE_ONLY", "UNMODELED", "OUT_OF_SCOPE"] },
+    "context": {
+      "type": "object",
+      "properties": {
+        "disease": { "type": "string" },
+        "treatment": { "type": "string" },
+        "species": { "type": "string" }
+      }
+    },
+    "inferred_from": { "type": "string" },
+    "evidence_kinds": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "h3_packet_complete": { "type": "boolean" }
+  },
+  "additionalProperties": true
+}

@@ -138,6 +138,5 @@ Done when a reader can answer, from these files alone:
 | What is UNMODELED? | `spec/unmodeled.yaml` |
 | What is always OUT_OF_SCOPE? | `spec/outcome_exclusions.yaml`, `spec/unmodeled.yaml` |
 
-Later phases (registry linter, evidence ledger, gates, paths, anatomy
-UI, host observation pilot) are listed in [PHASES.md](PHASES.md). They
-are not landed.
+Later phases are listed in [PHASES.md](PHASES.md). Phase 1 (registry +
+linter) is landed. Path engine and UI are not.

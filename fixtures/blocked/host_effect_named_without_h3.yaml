@@ -1,0 +1,5 @@
+state_id: HOST_EFFECT
+naming_status: NAMED
+context:
+  disease: HGSOC
+  treatment: untreated
