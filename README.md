@@ -38,6 +38,16 @@ First curated pack: `evidence/papers`, `evidence/claims`, `evidence/contradictio
 LLM extracts cannot become `SUPPORTED`, cannot set `host_effect_eligible`, and
 cannot omit `contradictions`.
 
+## Phase 3 — gate engine
+
+A claim packet gets one fail-closed verdict:
+
+`PASS` · `BLOCKED` · `CONTEXT_MISMATCH` · `UNKNOWN` · `CONFLICTED` · `UNMODELED` · `OUT_OF_SCOPE`
+
+```bash
+python -m engine.gates evidence/claims/C-0001.yaml
+```
+
 ## Status
 
 `host_effect` default: `UNNAMED` + `UNKNOWN` + `GATE_ONLY`.

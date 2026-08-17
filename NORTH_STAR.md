@@ -138,5 +138,5 @@ Done when a reader can answer, from these files alone:
 | What is UNMODELED? | `spec/unmodeled.yaml` |
 | What is always OUT_OF_SCOPE? | `spec/outcome_exclusions.yaml`, `spec/unmodeled.yaml` |
 
-Later phases are listed in [PHASES.md](PHASES.md). Phases 0–2 are landed.
+Later phases are listed in [PHASES.md](PHASES.md). Phases 0–3 are landed.
 Path engine and UI are not.

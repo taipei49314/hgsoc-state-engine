@@ -5,7 +5,7 @@
 | 0 | Freeze contracts | landed |
 | 1 | State registry + linter | landed (`python -m pytest`) |
 | 2 | Evidence ledger (human curate; LLM may extract, not upgrade) | landed (`python -m pytest`) |
-| 3 | Gate engine (full claim packets, not only naming) | not started |
+| 3 | Gate engine (full claim packets, not only naming) | landed (`python -m pytest`) |
 | 4 | Path engine (primary + second admissible path) | not started |
 | 5 | Anatomy layer with ontology IDs; still no organ-function ODE | not started |
 | 6 | Product loop UI | not started |
