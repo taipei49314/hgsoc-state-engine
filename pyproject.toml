@@ -15,6 +15,7 @@ test = ["pytest>=8.0"]
 
 [project.scripts]
 hgsoc-lint = "engine.lint:main"
+hgsoc-paths = "engine.paths:main"
 
 [tool.setuptools.packages.find]
 include = ["engine*"]

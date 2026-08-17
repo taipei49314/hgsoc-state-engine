@@ -48,6 +48,18 @@ A claim packet gets one fail-closed verdict:
 python -m engine.gates evidence/claims/C-0001.yaml
 ```
 
+## Phase 4 — path engine
+
+Graph search walks only edges that already passed the gate engine.
+It emits a primary path and a second admissible path, or
+`NO_SECOND_ADMISSIBLE_PATH`. It does not invent a path for the UI.
+Ranking uses `spec/ranking.yaml` (evidence-fit tuple), not a support mass.
+
+```bash
+python -m engine.paths fixtures/queries/brca1.yaml
+python -m engine.paths fixtures/queries/brca1.yaml --claims evidence/claims fixtures/paths
+```
+
 ## Status
 
 `host_effect` default: `UNNAMED` + `UNKNOWN` + `GATE_ONLY`.

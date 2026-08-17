@@ -1,0 +1,7 @@
+query_id: Q-0001
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+  specimen: unspecified
+start_state: BRCA1_BIALLELIC_LOSS_OBSERVED

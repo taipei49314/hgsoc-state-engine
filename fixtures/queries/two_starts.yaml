@@ -1,0 +1,9 @@
+query_id: Q-0002
+context:
+  disease: HGSOC
+  treatment: untreated
+  species: human
+  specimen: unspecified
+start_states:
+  - BRCA1_BIALLELIC_LOSS_OBSERVED
+  - TP53_PATHOGENIC_VARIANT_OBSERVED

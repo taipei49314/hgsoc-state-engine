@@ -1,6 +1,7 @@
 # Spec (Phase 0)
 
-Machine-readable contracts. No engine reads these yet.
+Machine-readable contracts. Linter, claim ledger, gates, and path engine
+read the registry and enforce these verdicts.
 
 | File | Role |
 | --- | --- |
