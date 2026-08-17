@@ -1,0 +1,111 @@
+# Frozen slice axes. Describe L3–L4 untreated tissue.
+# Not the protein→host scale chain. Axis 5 is not stored here.
+
+version: 1
+kind: frozen_slice_axes
+
+disease_lock:
+  name: high-grade serous ovarian carcinoma
+  short_name: HGSOC
+  histology_required: true
+  rejected_aliases:
+    - ovarian cancer
+    - epithelial ovarian cancer
+    - serous cancer
+    - gynecologic cancer
+
+untreated:
+  means: specimen collected before anticancer therapy that systematically remodels the tumor
+  not_equal_to: currently_off_treatment
+  exclude:
+    - neoadjuvant_chemotherapy
+    - prior_adjuvant_chemotherapy_exposure
+    - PARP_inhibitor
+    - anti_angiogenic_therapy
+    - radiotherapy
+    - experimental_anticancer_treatment
+    - post_recurrence_resample
+
+axes:
+  - id: A1
+    name: cell_state
+    concept_span: [proliferative, quiescent_or_stressed]
+    stored_values:
+      - PROLIFERATIVE
+      - QUIESCENT
+      - STRESSED
+      - MIXED
+      - UNKNOWN
+    required_to_name:
+      - marker_set
+      - assay
+      - threshold
+      - cell_population
+      - spatial_region
+    forbidden:
+      - one_marker_names_whole_slice
+
+  - id: A2
+    name: spatial_ecology
+    concept_span: [tumor_core, invasive_margin_or_stromal_interface]
+    stored_values:
+      - TUMOR_CORE
+      - INVASIVE_MARGIN
+      - STROMAL_INTERFACE
+      - MIXED_REGION
+      - UNKNOWN_REGION
+    required_to_name:
+      - operational_region_definition
+      - segmentation_method
+    example_region:
+      name: invasive_margin
+      distance_from_tumor_boundary_um: 0_to_200
+
+  - id: A3
+    name: immune_interaction
+    concept_span: [immune_excluded, inflamed_or_immune_engaged]
+    stored_values:
+      - IMMUNE_EXCLUDED
+      - INFLAMED_LOCAL
+      - IMMUNE_ENGAGED
+      - MIXED
+      - UNKNOWN
+    scope: local_tissue_or_tumor_immune_context
+    bound_to:
+      - specimen
+      - anatomical_site
+    forbidden_upgrade:
+      - systemic_inflammation
+      - whole_body_immune_activation
+      - immune_failure
+
+  - id: A4
+    name: treatment_response_preparedness
+    concept_span_visual_only: [response_permissive, response_refractory]
+    stored_form:
+      - PERMISSIVE
+      - REFRACTORY
+      - NOT_EVALUATED
+      - UNKNOWN
+    parameterized_when_evaluated:
+      - perturbation
+      - assay
+      - endpoint
+      - threshold
+    v1_default:
+      status: NOT_EVALUATED
+    not_a_stored_value:
+      - platinum_sensitive
+    not_equivalent_to_preparedness:
+      - BRCA_mutation
+      - HRD_genomic_score
+      - RAD51_status
+
+host_effect:
+  axis_id: A5
+  not_a_tissue_gradient: true
+  see: HOST_EFFECT_CONTRACT.md
+  v1_default:
+    naming_status: UNNAMED
+    knowledge_status: UNKNOWN
+    coverage_status: GATE_ONLY

@@ -1,0 +1,77 @@
+# Evidence type ≠ claim confidence. Two layers.
+
+version: 1
+kind: evidence_contract
+
+external_types_ECO:
+  - experimental_evidence
+  - imaging_evidence
+  - sequencing_evidence
+  - computational_evidence
+  - author_statement
+  - curator_inference
+
+project_fit:
+  FIT_4: same-specimen or same-patient human untreated HGSOC
+  FIT_3: independent human untreated HGSOC cohort
+  FIT_2: primary human tissue / ex vivo / organoid mechanism
+  FIT_1: cell line / animal / PDX / computational
+  FIT_0: author assertion / review-only / unsupported prose
+  note: Fit is match to disease, treatment, scale, and endpoint — not a quality total.
+
+claim_required_fields:
+  - claim_id
+  - subject_state
+  - relation
+  - object_state
+  - source_layer
+  - target_layer
+  - disease_context
+  - treatment_context
+  - anatomy_context
+  - specimen_context
+  - evidence
+  - assumptions
+  - contradictions
+  - falsify
+  - transfer_gaps
+  - knowledge_status
+  - naming_status
+  - allowed_as_parent
+
+evidence_item_fields:
+  - PMID_or_DOI_or_accession
+  - evidence_type
+  - evidence_fit
+  - model_system
+  - assay
+  - endpoint
+  - raw_effect
+  - confidence_interval
+  - limitations
+
+falsify_fields:
+  - observable
+  - assay
+  - expected_result
+  - threshold
+
+transfer_gap:
+  required_on_model_packets: true
+  to: human_untreated_HGSOC
+  unresolved_default: true
+
+llm_may:
+  - find_candidate_sentences
+  - extract_metadata
+  - propose_ontology_mapping
+llm_must_not:
+  - auto_upgrade_claim_to_SUPPORTED
+  - auto_add_host_effect
+  - auto_drop_contradiction
+
+seed_pmids_not_auto_admitted:
+  - "30318511"  # genomic HRD score can decouple from functional recovery
+  - "34203855"  # RAD51-based functional HRD
+  - "25400221"  # BRCA1 and stalled-fork / fork-collapse suppression
+  - "37729060"  # fallopian-tube epithelial replication stress / checkpoint

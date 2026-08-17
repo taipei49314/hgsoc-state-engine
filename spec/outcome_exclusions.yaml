@@ -1,0 +1,31 @@
+# L7 never enters the v1 state graph. Prevents outcome leakage.
+
+version: 1
+kind: outcome_exclusions
+
+never_state_graph:
+  - overall_survival
+  - progression_free_survival
+  - response_rate
+  - treatment_effectiveness
+  - platinum_sensitivity_outcome
+  - recurrence_probability
+  - prognosis
+  - personal_treatment_recommendation
+
+allowed_only_as:
+  container: external_validation_outcomes
+
+must_not:
+  - support_upstream_biological_edge
+  - add_support_score_to_host_effect
+  - backfill_untreated_baseline_state
+
+verdict_if_attempted: OUTCOME_LEAKAGE_REJECTED
+
+also_never_emit:
+  - generic_systemic_inflammation
+  - generic_organ_failure
+  - survival_prediction
+  - treatment_efficacy_prediction
+  - whole_body_narrative_from_molecular_signature_alone

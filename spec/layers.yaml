@@ -1,0 +1,101 @@
+# Scale layers. Orthogonal to frozen-slice axes A1–A4.
+# Anatomy (L5A) is not organ function (L5B).
+
+version: 1
+kind: scale_layers
+
+layers:
+  - id: L0
+    name: context
+    may_name: true
+    v1_coverage: MODELED_AS_GATE
+    notes: Disease, untreated, species, anatomy site, specimen metadata.
+
+  - id: L1
+    name: variant_or_protein_observation
+    may_name: true
+    v1_coverage: ADMISSIBLE
+    notes: Observed variant, allelic state, or assay-defined protein state.
+
+  - id: L2
+    name: molecular_process
+    may_name: true
+    v1_coverage: ADMISSIBLE
+    notes: Functional HR, fork protection, fork collapse, replication stress. Each state has its own permit.
+
+  - id: L3
+    name: cell_state
+    may_name: true
+    v1_coverage: ADMISSIBLE
+    notes: Overlaps frozen axis A1. Requires marker panel, population, region.
+
+  - id: L4
+    name: tissue_or_tumor
+    may_name: true
+    v1_coverage: ADMISSIBLE
+    notes: STIC, invasive HGSOC, core/margin, local immune region, ascites-derived spheroid (compartment, not host).
+
+  - id: L5A
+    name: anatomical_involvement
+    may_name: true
+    v1_coverage: ADMISSIBLE
+    notes: Discrete involvement. Ontology IDs (UBERON or equivalent) required when named.
+    not:
+      - organ_function
+      - organ_failure
+
+  - id: L5B
+    name: organ_function
+    may_name: false
+    v1_coverage: UNMODELED
+    notes: v1 does not integrate organ function. Future names must be operational and organ-specific.
+
+  - id: L6
+    name: host_phenotype_or_effect
+    may_name: false
+    v1_coverage: GATE_ONLY
+    notes: Observations allowed as HOST_OBSERVATION. Named host_effect only at H3.
+
+  - id: L7
+    name: clinical_outcome
+    may_name: false
+    v1_coverage: OUT_OF_SCOPE
+    notes: Survival, PFS, response rate never enter the state graph.
+
+adjacent_edges_default:
+  max_scale_jump: 1
+  allowed_pairs:
+    - [L1, L2]
+    - [L2, L3]
+    - [L3, L4]
+    - [L4, L5A]
+    - [L5A, L6]
+  forbidden_unless_empirical_cross_scale_bridge:
+    - [L1, L7]
+    - [L1, L5B]
+    - [L1, L6]
+    - [L3, L6]
+    - [L4, L7]
+
+anatomy_is_not_function:
+  example_named_anatomy:
+    - STIC present in distal fallopian tube
+    - ovarian surface colonization present
+    - ovarian tumor involvement present
+    - peritoneal implant present
+    - omental metastasis present
+    - tumor cells present in ascitic fluid
+  simultaneous_unmodeled:
+    organ_function:
+      coverage_status: UNMODELED
+      knowledge_status: UNKNOWN
+
+origin_trajectories:
+  population_supported:
+    - distal_fallopian_tube_STIC_then_ovary_then_peritoneum
+  also_admissible:
+    - early_or_parallel_peritoneal_dissemination
+    - STIC_like_lesion_as_metastatic_implantation
+  forbidden_auto_name:
+    this_sample_originated_in_fallopian_tube:
+      unless: patient-level pathology, matched lesions, shared mutations, or phylogeny

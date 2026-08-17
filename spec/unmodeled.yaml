@@ -1,0 +1,49 @@
+# UNKNOWN = knowledge. UNMODELED = engineering coverage. OUT_OF_SCOPE = never in v1 graph.
+
+version: 1
+kind: coverage_map
+
+definitions:
+  UNKNOWN: knowledge status; evidence missing or insufficient to name
+  UNMODELED: v1 does not integrate this layer as dynamics or as a named function state
+  GATE_ONLY: exit exists and is gated; naming still may be UNNAMED
+  OUT_OF_SCOPE: must not enter the state graph
+  BLOCKED: attempted name or edge fails a permit / gate
+  CONTEXT_MISMATCH: disease or context does not match frozen slice
+
+v1:
+  MODELED_AS_GATE:
+    - L0_context
+  ADMISSIBLE_WHEN_PERMITTED:
+    - L1_variant_or_protein
+    - L2_molecular_process
+    - L3_cell_state
+    - L4_tissue_or_tumor
+    - L5A_anatomical_involvement
+  GATE_ONLY:
+    - L6_host_effect
+  UNMODELED:
+    - L5B_organ_function
+    - organ_function_dynamics
+    - systemic_immune_dynamics
+    - whole_body_metabolism
+    - cachexia_dynamics
+    - hematologic_coagulation_effects
+    - endocrine_feedback
+    - pharmacokinetics
+    - treatment_driven_evolution
+  OUT_OF_SCOPE:
+    - L7_clinical_outcomes
+    - survival
+    - treatment_efficacy_as_state
+    - personal_treatment_recommendation
+
+display_when_path_stops:
+  organ_function: UNMODELED
+  host_phenotype: No direct human endpoint supplied — or observation only
+  host_effect: UNKNOWN
+  missing_unlock_packet:
+    - matched untreated HGSOC endpoint
+    - patient-level tumor–host linkage
+    - mechanistic bridge
+    - independent validation

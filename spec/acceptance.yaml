@@ -1,0 +1,74 @@
+# Frozen expected verdicts. Fixtures and engine come in later phases.
+# These strings are the contract: changing them is a charter change.
+
+version: 1
+kind: acceptance_verdicts
+
+T01_generic_cancer_rejection:
+  input: ovarian cancer offered as HGSOC
+  expected: CONTEXT_MISMATCH
+
+T02_treated_specimen_rejection:
+  input: post-NACT HGSOC offered as untreated slice
+  expected: OUT_OF_FROZEN_SLICE
+
+T03_HRD_assay_completeness:
+  input: HRD-high without assay or cutoff
+  expected: BLOCKED
+
+T04_assay_to_mechanism_leak:
+  input: HRD-high → functional HR deficiency without functional assay
+  expected: UNKNOWN
+
+T05_fork_overclaim:
+  input: BRCA1 mutation → fork collapse
+  expected: BLOCKED
+
+T06_local_to_systemic_leak:
+  input: local IFN signaling → systemic inflammation
+  expected: SCALE_JUMP_REJECTED
+
+T07_anatomy_allowed:
+  input: matched pathology supports STIC
+  expected: ANATOMICAL_STATE_NAMED
+
+T08_anatomy_is_not_function:
+  input: ovarian involvement → ovarian failure
+  expected: BLOCKED
+
+T09_host_observation_is_not_effect:
+  input: ascites directly observed
+  expected:
+    HOST_OBSERVATION: OBSERVED
+    HOST_EFFECT: UNKNOWN
+
+T10_outcome_exclusion:
+  input: overall survival used to support an upstream edge
+  expected: OUTCOME_LEAKAGE_REJECTED
+
+T11_second_path:
+  input: two distinct admissible mechanisms
+  expected: Path A + Path B
+  if_no_second: NO_SECOND_ADMISSIBLE_PATH
+
+T12_contradiction_preservation:
+  input: high-quality opposing studies
+  expected: CONFLICTED
+  forbidden: average_into_support_number
+
+T13_unmodeled_is_visible:
+  input: engine stops at anatomy
+  expected:
+    organ_function: UNMODELED
+    host_effect: UNKNOWN
+
+T14_full_replay:
+  input: any named state
+  expected_trace:
+    - state
+    - edge
+    - evidence
+    - PMID
+    - assay
+    - assumptions
+    - falsifier

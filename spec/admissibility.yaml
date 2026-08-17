@@ -1,0 +1,182 @@
+# Naming permits per layer. Missing required fields → BLOCKED or UNNAMED.
+# Wrong scale upgrade → BLOCKED / SCALE_JUMP_REJECTED / UNKNOWN.
+
+version: 1
+kind: naming_admissibility
+
+context:
+  may_name:
+    disease: HGSOC
+    treatment: UNTREATED_BASELINE
+    anatomy: [fallopian_tube, ovary, peritoneum, omentum, ascitic_compartment]
+    sample: [fresh_frozen, FFPE, spatial_section]
+  required:
+    - pathology_or_cohort_explicit_HGSOC
+    - specimen_before_systemic_therapy
+    - specimen_site_known_if_anatomy_named
+    - collection_metadata
+  missing_any: CONTEXT_GATE_BLOCKED
+  forbidden:
+    - generic_ovarian_cancer_as_HGSOC
+    - unknown_site_filled_as_primary
+
+variant_or_protein:
+  may_name:
+    - BRCA1_pathogenic_variant_observed
+    - BRCA1_biallelic_loss_observed
+    - TP53_pathogenic_variant_observed
+    - BRCA1_protein_low_by_specified_assay
+    - RAD51_foci_count_observed
+    - specified_phosphorylation_state_observed
+  required_fields:
+    - assay
+    - specimen
+    - threshold
+    - variant_classification
+    - allelic_state
+    - source
+  forbidden_inference:
+    - from: BRCA1_mutation
+      to: BRCA1_completely_inactive
+      unless: direct_function_or_protein_support
+
+assay_classification:
+  note: Not a biological mechanism state.
+  example:
+    name: HRD_HIGH
+    state_type: ASSAY_CLASSIFICATION
+    required:
+      - assay_name
+      - assay_version
+      - cutoff
+      - specimen
+  missing_assay_or_cutoff: BLOCKED
+  must_not_auto_upgrade_to:
+    - currently_functionally_HR_deficient
+    - replication_fork_collapse_present
+    - PARP_inhibitor_responsive
+  rationale: genomic HRD scar can remain high after BRCA1 reversion; functional HR is a separate state.
+
+molecular_process:
+  may_name:
+    - FUNCTIONAL_HR_DEFICIENT
+    - REPLICATION_STRESS_HIGH
+    - STALLED_FORK_REPAIR_DEFECTIVE
+    - FORK_PROTECTION_DEFECTIVE
+    - FORK_COLLAPSE_PRESENT
+    - G2M_CHECKPOINT_DEFECTIVE
+    - CHROMOSOMAL_INSTABILITY_HIGH
+  each_state_has_own_permit: true
+  FUNCTIONAL_HR_DEFICIENT:
+    required:
+      - functional_HR_assay
+      - threshold
+      - damage_context
+      - tumor_cell_denominator
+    without_functional_assay: UNKNOWN
+  FORK_COLLAPSE_PRESENT:
+    required_any:
+      - direct_fork_assay
+      - replication_coupled_break_evidence
+      - validated_fork_collapse_marker_packet
+    insufficient_alone:
+      - BRCA1_variant
+      - HRD_HIGH
+      - replication_stress_literature
+    if_only_those: BLOCKED
+  model_to_human:
+    transfer_gap_required: true
+    model_alone_does_not_name_human_host_effect: true
+
+cell_state:
+  may_name:
+    - PROLIFERATIVE
+    - QUIESCENT
+    - STRESSED
+    - CHECKPOINT_DEFECTIVE
+    - APOPTOTIC
+    - CIN_HIGH
+  required:
+    - marker_panel
+    - assay
+    - cell_population
+    - threshold
+    - location
+  forbidden:
+    - single_marker_to_whole_population
+    - pathway_enrichment_to_confirmed_phenotype_without_direct_phenotype_evidence
+
+tissue_or_tumor:
+  may_name:
+    - HGSOC_tumor_state
+    - STIC_lesion_present
+    - invasive_HGSOC_present
+    - tumor_core
+    - invasive_margin
+    - stromal_interface
+    - immune_excluded_region
+    - immune_engaged_region
+    - ascites_derived_tumor_spheroid
+  split:
+    ascites_derived_tumor_spheroid: tumor_or_compartment_state
+    ascites_present_in_patient: host_observation
+
+anatomical_involvement:
+  may_name:
+    - FALLOPIAN_TUBE_FIMBRIA_INVOLVED
+    - STIC_PRESENT
+    - OVARIAN_SURFACE_COLONIZED
+    - OVARIAN_TUMOR_PRESENT
+    - PERITONEAL_IMPLANT_PRESENT
+    - OMENTAL_METASTASIS_PRESENT
+    - ASCITIC_TUMOR_CELLS_PRESENT
+  minimum_evidence_any:
+    - pathology
+    - cytology
+    - imaging
+    - surgical_observation
+    - matched_sequencing
+    - phylogenetic_reconstruction
+  retain_evidence_type: true
+  ontology: UBERON_or_human_anatomy_equivalent
+  not: organ_function
+
+organ_function:
+  v1_coverage: UNMODELED
+  future_may_name_only_if_operational_organ_specific:
+    - mechanical_bowel_obstruction_present
+    - hydronephrosis_present
+    - pleural_effusion_present
+    - defined_renal_function_impairment_present
+    - defined_hepatic_synthetic_dysfunction_present
+  never:
+    - organ_failure
+    - body_weakening
+    - organ_stress
+    - systemic_damage
+  observed_is_not_caused_by:
+    note: organ state observed ≠ tumor mechanism X caused organ state Y
+
+host:
+  types:
+    - HOST_OBSERVATION
+    - HOST_ASSOCIATION
+    - HOST_EFFECT
+  phenotype_vocabulary: HPO_or_operational_definition
+  see: HOST_EFFECT_CONTRACT.md
+
+clinical_outcome:
+  v1_coverage: OUT_OF_SCOPE
+  never_in_state_graph:
+    - overall_survival
+    - progression_free_survival
+    - response_rate
+    - treatment_effectiveness
+    - platinum_sensitivity_outcome
+    - recurrence_probability
+    - prognosis
+  may_exist_only_as: external_validation_outcomes
+  must_not:
+    - support_upstream_biological_edge
+    - add_mass_to_host_effect
+    - backfill_untreated_baseline_state

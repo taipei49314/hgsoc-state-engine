@@ -1,0 +1,64 @@
+# G0 disease, G1 untreated, G2 state-type. Fail closed.
+
+version: 1
+kind: context_gate
+
+G0_disease:
+  question: Is this explicitly HGSOC?
+  pass_requires:
+    histology_or_cohort_label: high-grade serous ovarian carcinoma
+  fail:
+    status: CONTEXT_MISMATCH
+    examples:
+      - ovarian cancer
+      - epithelial ovarian cancer
+      - serous cancer
+      - gynecologic cancer
+
+G1_untreated:
+  question: Was the state measured before treatment-driven remodeling?
+  pass_requires:
+    before_systemic_therapy: true
+    prior_anticancer_exposure: none
+  fail:
+    status: OUT_OF_FROZEN_SLICE
+    also: TREATED_CONTEXT
+    examples:
+      - post-NACT HGSOC offered as untreated slice
+      - recurrent specimen after prior therapy
+      - currently_off_treatment treated as treatment-naive
+
+G2_state_type:
+  classify_input_as_one_of:
+    - context
+    - direct_observation
+    - assay_classification
+    - biological_state
+    - anatomical_state
+    - host_observation
+    - host_association
+    - clinical_outcome
+  prevent:
+    - HRD_score_as_active_molecular_mechanism
+
+core_data:
+  species: human
+  disease: HGSOC
+  treatment_context: untreated
+
+model_systems_allowed_for_mechanism:
+  - primary_human_cells
+  - organoids
+  - ex_vivo_tissue
+  - cell_lines
+  - PDX
+  - mouse_models
+  - computational_models
+  constraint: transfer_gap_to_human_untreated_HGSOC_must_be_declared
+  cannot_alone_name: human_host_effect
+
+collection_record_when_baseline_surgery:
+  - before_systemic_therapy
+  - prior_anticancer_exposure
+  - ischemia_time
+  - fixation_or_freezing_delay

@@ -1,0 +1,98 @@
+# G3 naming, G4 scale bridge, G5 contradiction, G7 host-effect, G8 receipt.
+
+version: 1
+kind: host_effect_and_shared_gates
+
+G3_naming_permit:
+  checks:
+    - state_name_in_registry
+    - required_metadata_complete
+    - evidence_type_fits_layer
+    - assumptions_explicit
+    - falsifier_present
+  fail:
+    - UNNAMED
+    - BLOCKED
+
+G4_cross_scale_bridge:
+  default_max_layer_span: 1
+  allowed_examples:
+    - protein → process
+    - process → cell
+    - cell → tissue
+    - tissue → anatomy
+    - anatomy → host
+  forbidden_examples:
+    - protein → survival
+    - protein → organ failure
+    - local cytokine → systemic inflammation
+  exception:
+    edge_type: EMPIRICAL_CROSS_SCALE_BRIDGE
+    requires: direct_human_data
+
+G5_contradiction_falsification:
+  every_edge_must_answer:
+    - what_observation_would_invalidate
+    - are_there_counterexamples
+    - does_it_hold_only_in_a_model_system
+  must_not_delete_contradictions: true
+  conflicted_display: Conflicting evidence
+  must_not: average_into_fake_support
+
+G6_alternative_path:
+  search:
+    - primary_admissible_path
+    - second_admissible_path
+  second_path_must_differ_in_at_least_one:
+    - mechanism
+    - anatomical_trajectory
+    - evidence_set
+    - assumption
+    - divergence_point
+  if_absent: NO_SECOND_ADMISSIBLE_PATH
+  must_not: invent_a_path_for_the_UI
+
+G7_host_effect:
+  ladder: [H0, H1, H2, H3, Hx]
+  default:
+    naming_status: UNNAMED
+    knowledge_status: UNKNOWN
+    coverage_status: GATE_ONLY
+  name_only_at: H3
+  below_H3:
+    naming_status: UNNAMED
+    knowledge_status: UNKNOWN_or_ASSOCIATED
+  H3_requires_all:
+    - typed_endpoint
+    - direct_human_measurement
+    - exact_context_human_HGSOC_untreated_compartment
+    - tumor_host_linkage
+    - mechanistic_bridge
+    - temporal_plausibility
+    - confounder_accounting
+    - independent_support_two_packets
+    - falsification_condition
+    - no_unresolved_scale_gap
+  H1_does_not_name_effect: true
+  H2_causal_claim: false
+  Hx:
+    naming_status: UNNAMED
+    knowledge_status: CONFLICTED
+  first_pilot:
+    phenotype: ascites_present_or_absent
+    initial_type: HOST_OBSERVATION
+    not: HOST_EFFECT
+
+G8_receipt:
+  required_fields:
+    - engine_version
+    - ontology_versions
+    - state_registry_hash
+    - evidence_snapshot_hash
+    - input_context
+    - admitted_claims
+    - rejected_claims
+    - blocked_edges
+    - selected_paths
+    - unmodeled_layers
+    - host_effect_status

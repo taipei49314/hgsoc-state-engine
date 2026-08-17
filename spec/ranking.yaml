@@ -1,0 +1,44 @@
+# Path ranking. No fabricated biological probabilities in v1.
+
+version: 1
+kind: ranking
+
+may_store_with_units_and_source:
+  - assay_score
+  - cell_count
+  - fold_change
+  - odds_ratio
+  - hazard_ratio
+  - confidence_interval
+  - ascites_volume
+  - spatial_distance
+  - expression_threshold
+
+must_not_emit:
+  - biological_support_equals_0.82
+  - host_effect_confidence_percent
+  - probability_of_organ_failure
+
+must_not_mix_into_edge_mass:
+  - paper_count
+  - p_value
+  - survival_rate
+  - treatment_response_rate
+
+rank_tuple_in_order:
+  - weakest_evidence_fit
+  - context_exactness
+  - direct_human_edge_count
+  - same_patient_linkage
+  - unresolved_transfer_gap_count
+  - contradiction_burden
+  - assumption_count
+  - path_length
+
+ui_shows:
+  - weakest_link
+  - context_mismatch
+  - model_transfer_gap
+  - contradictory_evidence
+
+ui_does_not_show: fake_precision_probability
