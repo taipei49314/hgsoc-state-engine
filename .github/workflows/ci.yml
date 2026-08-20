@@ -1,0 +1,47 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.11"
+          - "3.13"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b957fb4d3c30f06b2b2f017c4d6f2a154ba # v7.0.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package and test dependencies
+        run: python -m pip install --disable-pip-version-check -e ".[test]"
+
+      - name: Run test suite
+        run: python -m pytest
+
+      - name: Exercise public engine commands
+        run: |
+          python -m engine.lint fixtures/pass/stic_pathology.yaml
+          python -m engine.gates evidence/claims/C-0001.yaml
+          python -m engine.paths fixtures/queries/brca1.yaml --claims evidence/claims fixtures/paths
